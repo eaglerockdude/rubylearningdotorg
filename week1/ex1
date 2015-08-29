@@ -1,0 +1,14 @@
+# w1 ex1 guess results.
+# well everything in ruby is false except false and nil.
+#
+
+y = false
+z = true
+x = y or z  #false because x is nil which is neither
+puts x
+
+(x = y) or z  # this does nothing
+puts x   #outputs same as before
+
+x = (y or z)   # x is true or false..true its one of them.
+puts x
