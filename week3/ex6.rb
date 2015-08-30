@@ -7,11 +7,6 @@
 # different year each time; maybe any year at random between 1930 and 1950.
 # You can't stop talking to grandma until you shout BYE.
 
-def random_year
-  a = (1930...1951).to_a
-  a[rand(a.size)]
-end
-
 talk = true
 
 while talk
@@ -24,7 +19,8 @@ while talk
   else
 
     if  /\A[[:upper:]]*\Z/   =~ speak
-      puts "NO, NOT SINCE #{random_year}"
+      a = (1930...1951).to_a
+      puts "NO, NOT SINCE #{a[rand(a.size)]}"
     else
       puts "HUH? I CANNOT HERE YOU SONNY-BOY!."
     end
