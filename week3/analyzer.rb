@@ -1,8 +1,7 @@
-# analyzer program ken mcfadden.
-# NOTE - use string and array expressions at this point, NOT regular expressions.
+# analyzer program ken mcfadden rubylearningdotnet 2015
 
+# Lesson details:
 # Processes the text.txt sample file and gathers the following data:
-
 # Character count
 # Character count (excluding spaces)
 # Line count
@@ -15,7 +14,7 @@
 # 1. Get file
 # 2. get line count
 # 3. get char count of line
-# 4. get char count xcluding spaces
+# 4. get char count excluding spaces
 # 5. get word count(split on whitespace)
 # 6. get sentence count(split on periods, ? and ! punctuation)
 # 7. get paragraph count(split on double lines)
@@ -34,62 +33,64 @@
 @sent_avg = 0
 @blank_lines = 0
 @lines_ary = []
-@sentence_ary = []
+@period_ary = []
 @question_ary = []
 @exclaim_ary  = []
 @length = 0
-@sentence_total
+@sentence_tot = 0.0
 @all_txt  = ''
-
 
 File.open("text.txt") do |f|
   f.each do |record|
 
     @lines += 1
-
-    puts "#{@lines} #{record}"
-
-    # save each line to array for totals processing:
+    @all_txt << record
     @lines_ary <<  record.lines  # lines to array
 
-    @all_txt << record
+   #  puts "#{@lines} #{record}"
 
     # sum total characters
     @length = record.length
     @char_tot +=  @length
 
-    # sum total words & characters
+    # total words
     rec_words = record.split(' ')
     @words = rec_words.size
     @word_tot += @words
-    # get characters
+
+    # total characters exclude spaces
     rec_words.each do |elem|
       chars = elem.size
       @char_tot_nospaces += chars
     end
 
-    # save sentence based on a period.
-    @sentence_ary =  record.split(/\.?\s+/)
+  end   # end read loop
 
-    chompit = record.chomp
-    if chompit ==  ""
-      @blank_lines += 1
-    end
+    # count total sentences  & paragraphs
+    @period_ary = @all_txt.scan(/\./)
+    @question_ary = @all_txt.scan(/\?/)
+    @exclaim_ary = @all_txt.scan(/\!/)
+    @paragraphs  = @all_txt.scan(/\r\n\r\n/)
 
-  end
+    @sentence_tot =  @period_ary.size + @exclaim_ary.size + @question_ary.size
+    # Average words/sentence
+   @avg_words_sent = 0.0
+  @avg_words_sent = @word_tot/@sentence_tot
+  @avg_sent_paragraph = 0.0
+  @avg_sent_paragraph =  @sentence_tot / @paragraphs.size
 
-    puts "line_count  #{@lines}"
-    puts "Number of lines are #{@lines_ary.size}"
-
-    @sentence_ary = @all_txt.split('.')
-    @question_ary = @all_txt.split('?')
-    @exclaim_ary = @all_txt.split('!')
-    puts "Number of sentences ending with a period is : #{@sentence_ary.size}"
-    puts "Number of sentences ending with ? is : #{@question_ary.size}"
-    puts "#{@question_ary}"
-    puts "Number of sentences ending with ! is : #{@exclaim_ary.size}"
-    puts "#{@exclaim_ary}"
-    puts "done"
-
+    puts "------------------------------- Analysis Report -----------------------------------------------------"
+    puts "Number of lines :  #{@lines}"
+    puts "Number of characters  :  #{@char_tot}"
+    puts "Number of characters excluding spaces   :  #{@char_tot_nospaces}"
+    puts "Number of words   :  #{@word_tot}"
+    puts "Number of sentences ending with a period  '.' is : #{@period_ary.size}"
+    puts "Number of sentences ending with '?'  is : #{@question_ary.size}"
+    puts "Number of sentences ending with '!' is : #{@exclaim_ary.size}"
+    puts "Number of sentences  is : #{@period_ary.size + @exclaim_ary.size + @question_ary.size}"
+    puts "Number of sentences  is : #{@sentence_tot}"
+    puts "Number of paragraphs is  : #{@paragraphs.size}"
+    puts "Avg. number of words per sentence  : #{@avg_words_sent}"
+    puts "Avg. number of sentences per paragraph  : #{@avg_sent_paragraph}"
 
   end
