@@ -11,3 +11,7 @@ collection.each do |n|
 end
 
 puts "#{@sumof}"
+
+injector = collection.inject("+")
+
+puts "#{injector}"
