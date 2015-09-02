@@ -1,6 +1,16 @@
 # ken mcfadden 
+------------------------------------------------
 ## Regex notes
 This md file contains useful notes on regexp, in general within a ruby context, but also could be outside that flavor.
+
+## Regex character set
+### all ACII special characters
+!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+
+### Those used by regex (blackslash escaped)  called  metacharacters
+ !"#\$%&'\(\)\*\+,-\./:;<=>\?@\[\\]\^_`\{\|}~
+ 
+ Any regular expression that does not include any of the dozen characters $()*+.?[\^{| simply matches itself
 
 ## Character Classes
 Character classes are created by the metacharacters [ ].  This defines the class.  It is simlar to an 'IN" statement in SQL.
