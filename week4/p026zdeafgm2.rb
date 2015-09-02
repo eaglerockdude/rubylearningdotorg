@@ -1,8 +1,8 @@
 # kenmcfadden rubylearning.com wk4
-# modified grandpa: Must say bye three times to hangup:
+# modified grandpa: Must say bye three times UPPERCASE to hangup:
 
 talk = true
-#bye_cnt = 0
+bye_cnt = 0
 a = (1930...1951).to_a
 while talk
 
