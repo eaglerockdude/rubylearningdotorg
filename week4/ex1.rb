@@ -28,6 +28,11 @@ class Dog
   def chase_cat
     puts "Ima chasing...Ima chasing!  Still no luck!"
   end
+
+  def method_missing(m, *args, &block)
+    puts "There's no method called #{m} here -- please try again."
+  end
+
 end
 
 mydog = Dog.new('hupperdoo')
@@ -36,3 +41,9 @@ puts "My name is #{mydog.name}"
 mydog.bark
 mydog.eat
 mydog.chase_cat
+
+mydog.heydude
+
+#mydog.teach_trick(:dance) { "#{@name} is dancing!" }
+
+#puts mydog.dance
