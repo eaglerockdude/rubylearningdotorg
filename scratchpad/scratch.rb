@@ -1,0 +1,1 @@
+puts number = Math.abs(-12)
