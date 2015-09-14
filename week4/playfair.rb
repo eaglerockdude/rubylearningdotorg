@@ -1,7 +1,9 @@
 #   ken mcfadden playfair  exercise
 #
-#  (see wiki for rules!)
-#    Notes -
+#  (see wiki for rules)
+#
+# Based on liam-lagays implementation git@github.com:liam-lagay-14/playfair-cipher.git
+#
 
 class PlayFair
 
