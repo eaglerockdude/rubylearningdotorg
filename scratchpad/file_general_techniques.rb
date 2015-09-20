@@ -13,11 +13,46 @@ data = f.read
 p data
 f.close
 
-# READLINES: reads whole file at once as an array of lines.
+# another way to read the whole at once.
+contents = File.read("file.txt")
+
+# read the whole file using a block:  with a block ruby will close the file.
+File.open("txtfile.txt") do  |file|
+ contents = file.read
+end
+
+# READLINES: reads whole file at once as an ARRAY of lines.
 f = File.new('txtfile.txt')
 puts "f.readlines"
 p f.readlines
 f.close
+
+# example of reading a log file looking for records with a particular IP address:
+File.open("access_log") do |log_file|
+  requests = log_file.readlines
+  requests.each do |request|
+    if request.start_with?("127.0.0.1 ")
+      puts request
+    end
+  end
+end
+
+#  reading LINE by line...the .each_line method and the .foreach methods.
+File.open("access_log") do |log_file|
+  log_file.each_line do |request|
+    if request.start_with?("127.0.0.1 ")
+      puts request
+    end
+  end
+end
+
+# with the FOREACH you don't have to open the file yourself.
+File.foreach("access_log") do |request|
+  if request.start_with?("127.0.0.1 ")
+    puts request
+  end
+end
+
 
 # READLINE and GETS : both read a line, but on EOF GETS returns nil while READLINE throws an error.
 f = File.new('txtfile.txt')
@@ -130,6 +165,17 @@ open('myfile2.out', 'w') { |f|
   f << "and seven\n"
   f << "years ago\n"
 }
+
+# Using argument on each to say what the file seperator is, in this case a comma, instead of a newline.
+# this could be for a comma delimited text file.
+File.open("commas.txt") do |file|
+  file.each(",") do |record|
+    puts record
+# >> "this is field one,"
+# "this is field two,"
+# "this is field three"
+  end
+end
 
 
 
