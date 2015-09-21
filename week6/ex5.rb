@@ -28,9 +28,10 @@ class Game
       file_score = f.readline.to_i
       file_time_int  = f.readline.to_i
       file_time = Time.at(file_time_int)
+      # check difference between modification time and the time the file was written..
       difference = (File.stat(file).mtime - file_time).abs
       if difference > 1
-        puts  "Cheating is not allowed.."
+        puts  "Cheating is not allowed..you are trying to modify the score after the game is over."
         puts "Your saved score is #{file_score}."
       end
 
