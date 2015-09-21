@@ -1,0 +1,8 @@
+# Logfile created on 2015-09-20 17:47:34 -0700 by logger.rb/44203
+W, [2015-09-20T17:47:34.329704 #3095]  WARN -- : Nothing to do!
+F, [2015-09-20T17:47:34.329820 #3095] FATAL -- : Caught exception; exiting
+F, [2015-09-20T17:47:34.329852 #3095] FATAL -- : No such file or directory @ rb_sysopen - a_non_existent_file (Errno::ENOENT)
+/Users/kenmcfadden/rubylearning/scratchpad/logging.rb:17:in `foreach'
+/Users/kenmcfadden/rubylearning/scratchpad/logging.rb:17:in `<top (required)>'
+-e:1:in `load'
+-e:1:in `<main>'
