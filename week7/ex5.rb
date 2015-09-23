@@ -15,6 +15,7 @@ def interval_runner(seconds)
   end
 end
 
+
 interval_runner(5) do
   puts "I am still running...the time is now approximately  #{Time.now.strftime("%X")}"
 end
