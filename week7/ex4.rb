@@ -8,10 +8,6 @@ require 'date'
 
 class LastModified
 
-  def initialize
-
-  end
-
   def last_modified(file)
 
     file_changed_time  = File.stat(file).ctime   #ctime is the time the directory info about the file was changed....
