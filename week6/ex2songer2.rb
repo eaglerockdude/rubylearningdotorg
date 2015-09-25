@@ -8,7 +8,13 @@
 
 # also check if we have a TAG ID.
 
-bf = open('song.mp3', 'r')
+prompt = '> '
+puts "Please enter the name of your .mp3 file to process: " , prompt
+input_file = $stdin.gets.chomp
+
+begin
+
+bf = open(input_file)
 
 # check if we have an ID TAG
 bf.seek(-128, File::SEEK_END)
@@ -32,6 +38,13 @@ bf.close
 else
   puts "No TAG ID was found on the input file...cannot process."
 end
+
+rescue Exception => e
+puts e.message
+puts e.backtrace.inspect
+
+end
+
 
 
 
