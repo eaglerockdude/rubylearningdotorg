@@ -29,9 +29,8 @@ require 'logger'
 #
 
 # local variables
-@lines = 0
 @characters = 0
-@charactersexcludingspaces = 0
+@characters_without_spaces = 0
 @words = 0
 @sentences = 0
 @paragraphs = 0
@@ -39,11 +38,10 @@ require 'logger'
 @word_total = 0
 @sentence_average = 0
 @blank_lines = 0
-@lines_ary = []
+@lines = []
 @period_ary = []
 @question_ary = []
 @exclaim_ary  = []
-@length = 0
 @sentence_tot = 0.0
 @all_txt  = ''
 
@@ -58,25 +56,19 @@ begin
 
     f.each do |record|
 
-      @lines += 1
       @all_txt << record
-      @lines_ary <<  record.lines  # lines to array
-
-      #  puts "#{@lines} #{record}"
+      @lines <<  record.lines  # lines to array
 
       # sum total characters
-      @length = record.length
-      @characters +=  @length
+      @characters +=  record.length
 
       # total words
       rec_words = record.split(' ')
-      @words = rec_words.size
-      @word_total += @words
+      @word_total += rec_words.size
 
       # total characters exclude spaces
       rec_words.each do |elem|
-        chars = elem.size
-        @charactersexcludingspaces += chars
+        @characters_without_spaces += elem.size
       end
 
     end   # end read loop
@@ -90,25 +82,25 @@ begin
     @paragraphs  = @all_txt.scan(/\r\n\r\n/)
 
     @sentence_tot =  @period_ary.size + @exclaim_ary.size + @question_ary.size
-    # Average words/sentence
-    @avg_words_sent = 0.0
+    # Averages for  words/sentence
     @avg_words_sent = @word_total/@sentence_tot
-    @avg_sent_paragraph = 0.0
     @avg_sent_paragraph =  @sentence_tot / @paragraphs.size
 
-    puts "------------------------------- Analysis Report -----------------------------------------------------"
-    puts "Number of lines :  #{@lines}"
-    puts "Number of characters  :  #{@characters}"
-    puts "Number of characters excluding spaces   :  #{@charactersexcludingspaces}"
-    puts "Number of words   :  #{@word_total}"
-    puts "Number of sentences ending with a period  '.' is : #{@period_ary.size}"
-    puts "Number of sentences ending with '?'  is : #{@question_ary.size}"
-    puts "Number of sentences ending with '!' is : #{@exclaim_ary.size}"
-    puts "Number of sentences  is : #{@period_ary.size + @exclaim_ary.size + @question_ary.size}"
-    puts "Number of sentences  is : #{@sentence_tot}"
-    puts "Number of paragraphs is  : #{@paragraphs.size}"
-    puts "Avg. number of words per sentence  : #{@avg_words_sent}"
-    puts "Avg. number of sentences per paragraph  : #{@avg_sent_paragraph}"
+    puts [
+    '------------------------------- Analysis Report ----------------------------------------------------- ',
+     "Number of lines :  #{@lines.size}" ,
+     "Number of characters  :  #{@characters}",
+     "Number of characters excluding spaces   :  #{@characters_without_spaces}" ,
+     "Number of words   :  #{@word_total}" ,
+    "Number of sentences ending with a period  '.' is : #{@period_ary.size}" ,
+    "Number of sentences ending with '?'  is : #{@question_ary.size}" ,
+     "Number of sentences ending with '!' is : #{@exclaim_ary.size}" ,
+     "Number of sentences  is : #{@period_ary.size + @exclaim_ary.size + @question_ary.size}" ,
+     "Number of sentences  is : #{@sentence_tot}" ,
+     "Number of paragraphs is  : #{@paragraphs.size}" ,
+     "Avg. number of words per sentence  : #{@avg_words_sent}" ,
+     "Avg. number of sentences per paragraph  : #{@avg_sent_paragraph}"
+    ]
 
     $LOG.info("Text Analyzer Completed......No errors.")
 

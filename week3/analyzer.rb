@@ -24,7 +24,7 @@
 # local variables
 @lines = 0
 @characters = 0
-@charactersexcludingspaces = 0
+@characters_without_spaces = 0
 @words = 0
 @sentences = 0
 @paragraphs = 0
@@ -32,7 +32,7 @@
 @word_total = 0
 @sentence_average = 0
 @blank_lines = 0
-@lines_ary = []
+@lines = []
 @period_ary = []
 @question_ary = []
 @exclaim_ary  = []
@@ -45,7 +45,7 @@ File.open("text.txt") do |f|
 
     @lines += 1
     @all_txt << record
-    @lines_ary <<  record.lines  # lines to array
+    @lines <<  record.lines  # lines to array
 
    #  puts "#{@lines} #{record}"
 
@@ -61,7 +61,7 @@ File.open("text.txt") do |f|
     # total characters exclude spaces
     rec_words.each do |elem|
       chars = elem.size
-      @charactersexcludingspaces += chars
+      @characters_without_spaces += chars
     end
 
   end   # end read loop
@@ -82,7 +82,7 @@ File.open("text.txt") do |f|
     puts "------------------------------- Analysis Report -----------------------------------------------------"
     puts "Number of lines :  #{@lines}"
     puts "Number of characters  :  #{@characters}"
-    puts "Number of characters excluding spaces   :  #{@charactersexcludingspaces}"
+    puts "Number of characters excluding spaces   :  #{@characters_without_spaces}"
     puts "Number of words   :  #{@word_total}"
     puts "Number of sentences ending with a period  '.' is : #{@period_ary.size}"
     puts "Number of sentences ending with '?'  is : #{@question_ary.size}"
