@@ -5,6 +5,7 @@
 # will the game.sav file from week 6 exercise 2 and also a file from my scratch lib.
 
 require 'date'
+require_relative File.dirname(__FILE__) + '/../../scratchpad/units_from_seconds'
 
 class LastModified
 
@@ -14,7 +15,7 @@ class LastModified
     the_time_now = Time.now
 
     # Time objects are in a number of seconds since Jan 1st 1970 EPOCH internally so we need to calculate days / secs per day.
-    days_since_change = (the_time_now - file_changed_time)/(60*60*24)
+    days_since_change = Seconds.new(the_time_now - file_changed_time).days
     puts "#{file} was last modified #{days_since_change} days ago."
   end
 
@@ -22,7 +23,8 @@ end
 
 lm = LastModified.new
 
-lm.last_modified('game.sav')
-lm.last_modified('txt1.txt')
-
+files = Dir.glob('*.*')
+files.each do |f|
+  lm.last_modified(f)
+end
 
