@@ -39,11 +39,15 @@ require 'logger'
 @sentence_average = 0
 @blank_lines = 0
 @lines = []
-@period_ary = []
-@question_ary = []
-@exclaim_ary  = []
-@sentence_tot = 0.0
-@all_txt  = ''
+@periods = []
+@questions = []
+@exclaimation_points  = []
+@sentence_total = 0.0
+@all_text  = ''
+PERIOD = /\./
+QUESTIONS = /\?/
+EXCLAIMATION = /!/
+PARAGRAPH =   /\r\n\r\n/
 
 # begin/end over entire code group for exception handling
 begin
@@ -56,7 +60,7 @@ begin
 
     f.each do |record|
 
-      @all_txt << record
+      @all_text << record
       @lines <<  record.lines  # lines to array
 
       # sum total characters
@@ -76,15 +80,18 @@ begin
     $LOG.info("Read loop complete..printing statistics....")
 
     # count total sentences  & paragraphs
-    @period_ary = @all_txt.scan(/\./)
-    @question_ary = @all_txt.scan(/\?/)
-    @exclaim_ary = @all_txt.scan(/\!/)
-    @paragraphs  = @all_txt.scan(/\r\n\r\n/)
+    def get_count(type)
+      @all_text.scan(type)
+    end
+    @periods = get_count(PERIOD)
+    @questions = get_count(QUESTIONS)
+    @exclaimation_points = get_count(EXCLAIMATION)
+    @paragraphs  = get_count(PARAGRAPH)
 
-    @sentence_tot =  @period_ary.size + @exclaim_ary.size + @question_ary.size
+    @sentence_total =  @periods.size + @exclaimation_points.size + @questions.size
     # Averages for  words/sentence
-    @avg_words_sent = @word_total/@sentence_tot
-    @avg_sent_paragraph =  @sentence_tot / @paragraphs.size
+    @avg_words_sent = @word_total/@sentence_total
+    @avg_sent_paragraph =  @sentence_total / @paragraphs.size
 
     puts [
     '------------------------------- Analysis Report ----------------------------------------------------- ',
@@ -92,17 +99,18 @@ begin
      "Number of characters  :  #{@characters}",
      "Number of characters excluding spaces   :  #{@characters_without_spaces}" ,
      "Number of words   :  #{@word_total}" ,
-    "Number of sentences ending with a period  '.' is : #{@period_ary.size}" ,
-    "Number of sentences ending with '?'  is : #{@question_ary.size}" ,
-     "Number of sentences ending with '!' is : #{@exclaim_ary.size}" ,
-     "Number of sentences  is : #{@period_ary.size + @exclaim_ary.size + @question_ary.size}" ,
-     "Number of sentences  is : #{@sentence_tot}" ,
+    "Number of sentences ending with a period  '.' is : #{@periods.size}" ,
+    "Number of sentences ending with '?'  is : #{@questions.size}" ,
+     "Number of sentences ending with '!' is : #{@exclaimation_points.size}" ,
+     "Number of sentences  is : #{@periods.size + @exclaimation_points.size + @questions.size}" ,
+     "Number of sentences  is : #{@sentence_total}" ,
      "Number of paragraphs is  : #{@paragraphs.size}" ,
      "Avg. number of words per sentence  : #{@avg_words_sent}" ,
      "Avg. number of sentences per paragraph  : #{@avg_sent_paragraph}"
     ]
 
     $LOG.info("Text Analyzer Completed......No errors.")
+
 
   end
 # exception handler:

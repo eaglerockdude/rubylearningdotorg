@@ -40,12 +40,12 @@ require 'logger'
 @sentence_average = 0
 @blank_lines = 0
 @lines = []
-@period_ary = []
-@question_ary = []
-@exclaim_ary  = []
+@periods = []
+@questions = []
+@exclaimation_points  = []
 @length = 0
-@sentence_tot = 0.0
-@all_txt  = ''
+@sentence_total = 0.0
+@all_text  = ''
 
  # begin/end over entire code group for exception handling
 begin
@@ -59,7 +59,7 @@ File.open("text.txt") do |f|
   f.each do |record|
 
     @lines += 1
-    @all_txt << record
+    @all_text << record
     @lines <<  record.lines  # lines to array
 
    #  puts "#{@lines} #{record}"
@@ -84,28 +84,28 @@ File.open("text.txt") do |f|
   $LOG.info("Read loop complete..printing statistics....")
 
     # count total sentences  & paragraphs
-    @period_ary = @all_txt.scan(/\./)
-    @question_ary = @all_txt.scan(/\?/)
-    @exclaim_ary = @all_txt.scan(/\!/)
-    @paragraphs  = @all_txt.scan(/\r\n\r\n/)
+    @periods = @all_text.scan(/\./)
+    @questions = @all_text.scan(/\?/)
+    @exclaimation_points = @all_text.scan(/\!/)
+    @paragraphs  = @all_text.scan(/\r\n\r\n/)
 
-    @sentence_tot =  @period_ary.size + @exclaim_ary.size + @question_ary.size
+    @sentence_total =  @periods.size + @exclaimation_points.size + @questions.size
     # Average words/sentence
    @avg_words_sent = 0.0
-  @avg_words_sent = @word_total/@sentence_tot
+  @avg_words_sent = @word_total/@sentence_total
   @avg_sent_paragraph = 0.0
-  @avg_sent_paragraph =  @sentence_tot / @paragraphs.size
+  @avg_sent_paragraph =  @sentence_total / @paragraphs.size
 
     puts "------------------------------- Analysis Report -----------------------------------------------------"
     puts "Number of lines :  #{@lines}"
     puts "Number of characters  :  #{@characters}"
     puts "Number of characters excluding spaces   :  #{@characters_without_spaces}"
     puts "Number of words   :  #{@word_total}"
-    puts "Number of sentences ending with a period  '.' is : #{@period_ary.size}"
-    puts "Number of sentences ending with '?'  is : #{@question_ary.size}"
-    puts "Number of sentences ending with '!' is : #{@exclaim_ary.size}"
-    puts "Number of sentences  is : #{@period_ary.size + @exclaim_ary.size + @question_ary.size}"
-    puts "Number of sentences  is : #{@sentence_tot}"
+    puts "Number of sentences ending with a period  '.' is : #{@periods.size}"
+    puts "Number of sentences ending with '?'  is : #{@questions.size}"
+    puts "Number of sentences ending with '!' is : #{@exclaimation_points.size}"
+    puts "Number of sentences  is : #{@periods.size + @exclaimation_points.size + @questions.size}"
+    puts "Number of sentences  is : #{@sentence_total}"
     puts "Number of paragraphs is  : #{@paragraphs.size}"
     puts "Avg. number of words per sentence  : #{@avg_words_sent}"
     puts "Avg. number of sentences per paragraph  : #{@avg_sent_paragraph}"
