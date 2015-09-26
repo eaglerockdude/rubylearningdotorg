@@ -5,11 +5,7 @@
 collection = [12, 23, 456, 123, 4579]
 
 collection.each do |n|
-  if n % 2  == 0
-    puts "#{n} is even."
-  else
-    puts "#{n} is odd."
-  end
+  puts  n.even? ? "#{n} is even" : "#{n} is odd"
 end
 
 
